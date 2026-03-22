@@ -157,8 +157,12 @@ ai-research-analyst/
 │   ├── run_local.py       # run full pipeline without Lambda
 │   ├── seed_interests.py  # bootstrap the interest profile
 │   └── test_email.py      # preview digest in browser
+├── tasks/                 # Claude Code permenant memory
+|   ├── todo.md            # Current plan - at the completion will be renamed with ticket and descriptive name
+|   └── lessons.md         # Place to store lessons from things that had to be corrected
 ├── pyproject.toml
 └── .env.example
+└── CLAUDE.md              # Project level instructions for Claude Code
 ```
 
 ---
