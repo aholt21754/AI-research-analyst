@@ -2,7 +2,7 @@
 
 An autonomous multi-agent system that monitors the AI/ML research landscape, summarises daily developments, and delivers personalised digests. Built progressively across 5 phases to demonstrate core agentic AI patterns — from a simple reactive pipeline to a fully autonomous, multi-agent system with human-in-the-loop control.
 
-> **Portfolio project** — each phase is independently shippable and introduces a new agentic concept. The architecture is designed to be walked through in an interview, not just run.
+> **Portfolio project** — each phase is independently shippable and introduces a new agentic concept. 
 
 ---
 

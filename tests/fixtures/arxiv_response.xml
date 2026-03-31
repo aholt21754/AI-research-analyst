@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry>
+    <id>https://arxiv.org/abs/2501.00001v1</id>
+    <title>  Efficient LLM Agents via Novel Attention Patterns  </title>
+    <summary>  We introduce a novel attention mechanism that reduces memory usage by 40% while maintaining accuracy on standard benchmarks. Our agent framework demonstrates 2x throughput improvements over baseline transformer architectures.  </summary>
+    <published>2026-03-21T00:00:00Z</published>
+  </entry>
+  <entry>
+    <id>https://arxiv.org/abs/2501.00002v1</id>
+    <title>Scalable Fine-Tuning with LoRA Variants</title>
+    <summary>A comprehensive comparison of LoRA, QLoRA, and AdaLoRA across seven benchmarks. Results show QLoRA achieves 95% of full fine-tuning quality at 12% of the memory cost.</summary>
+    <published>2026-03-20T00:00:00Z</published>
+  </entry>
+  <entry>
+    <id>https://arxiv.org/abs/2501.00003v1</id>
+    <title>Survey of Multimodal Language Models</title>
+    <summary>A survey covering 50 multimodal language models published between 2023 and 2025, analysing architectural choices, training data, and evaluation benchmarks.</summary>
+    <published>2026-03-19T00:00:00Z</published>
+  </entry>
+</feed>

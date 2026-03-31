@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-research-analyst"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.30",
+    "requests>=2.31",
+    "feedparser>=6.0",
+    "beautifulsoup4>=4.12",
+    "boto3>=1.34",
+    "python-dotenv>=1.0",
+    "python-json-logger>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-mock>=3.12", "responses>=0.25"]
+
+[tool.setuptools.packages.find]
+where = ["."]

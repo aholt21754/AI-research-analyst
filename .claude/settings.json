@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(python -c \"import setuptools; print\\(setuptools.__version__\\)\")",
+      "Bash(pip --version)",
+      "Bash(pip install setuptools -q)",
+      "Bash(pip install -e \".[dev]\" -q)",
+      "Bash(python -m pytest tests/unit/ -v)",
+      "Bash(python -m pytest tests/unit/ -v --tb=short)",
+      "Bash(python -m pytest tests/unit/ --tb=short -q)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(python -m pytest tests/unit/ -q)"
+    ],
+    "additionalDirectories": [
+      "c:\\Code\\AI-research-analyst\\agents"
+    ]
+  }
+}

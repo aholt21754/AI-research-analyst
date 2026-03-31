@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Papers With Code</title>
+    <link>https://paperswithcode.com</link>
+    <item>
+      <title>Mixture of Experts with Sparse Attention</title>
+      <link>https://paperswithcode.com/paper/moe-sparse-attention</link>
+      <description>We propose a new MoE architecture combining sparse attention with expert routing, achieving SOTA on five benchmarks.</description>
+      <pubDate>Thu, 21 Mar 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Agent Memory: Long-term Context for LLM Agents</title>
+      <link>https://paperswithcode.com/paper/agent-memory</link>
+      <description>A hierarchical memory system enabling LLM agents to recall information from conversations over months without context length limits.</description>
+      <pubDate>Wed, 20 Mar 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Benchmark: Evaluating Code Generation Models</title>
+      <link>https://paperswithcode.com/paper/code-eval</link>
+      <description>A new benchmark for evaluating code generation across 12 programming languages with 5000 test cases.</description>
+      <pubDate>Tue, 19 Mar 2026 09:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
