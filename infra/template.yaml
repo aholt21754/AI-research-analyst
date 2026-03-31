@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: AI Research Analyst - Daily digest pipeline
+
+Parameters:
+  FromEmail:
+    Type: String
+    Description: Email address to send digest from (will be SES-verified)
+  ToEmail:
+    Type: String
+    Description: Email address to receive digest
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 300
+    MemorySize: 512
+
+Resources:
+
+  # S3: Run manifests
+  RunsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${AWS::StackName}-runs-${AWS::AccountId}'
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldRuns
+            Status: Enabled
+            ExpirationInDays: 90
+
+  # SES: Email identity (sender)
+  SESFromIdentity:
+    Type: AWS::SES::EmailIdentity
+    Properties:
+      EmailIdentity: !Ref FromEmail
+      DkimAttributes:
+        SigningEnabled: true
+      FeedbackAttributes:
+        EmailForwardingEnabled: false
+
+  # SES: Configuration set (reputation tracking)
+  SESConfigurationSet:
+    Type: AWS::SES::ConfigurationSet
+    Properties:
+      Name: !Sub '${AWS::StackName}-config'
+      ReputationOptions:
+        ReputationMetricsEnabled: true
+      SendingOptions:
+        SendingEnabled: true
+
+  # Lambda
+  DailyDigestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: handlers/daily_digest.handler
+      Environment:
+        Variables:
+          ENV: lambda
+          FROM_EMAIL: !Ref FromEmail
+          TO_EMAIL: !Ref ToEmail
+          RUNS_BUCKET: !Ref RunsBucket
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - s3:PutObject
+              Resource: !Sub '${RunsBucket.Arn}/runs/*'
+            - Effect: Allow
+              Action:
+                - ssm:GetParameter
+              Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/ai-research-analyst/*'
+      Events:
+        DailySchedule:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 7 * * ? *)
+            Description: Daily AI research digest at 7AM UTC
+            Enabled: true
+
+Outputs:
+  DailyDigestFunctionArn:
+    Value: !GetAtt DailyDigestFunction.Arn
+  RunsBucketName:
+    Value: !Ref RunsBucket
+  SESIdentity:
+    Value: !Ref SESFromIdentity
+    Description: SES email identity - check AWS Console to confirm verification status

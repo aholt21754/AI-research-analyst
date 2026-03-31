@@ -1,0 +1,19 @@
+version = 0.1
+
+[default]
+[default.global.parameters]
+stack_name = "ai-research-analyst"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+region = "us-east-1"
+resolve_s3 = true
+parameter_overrides = [
+    "FromEmail=aholt21754@gmail.com",
+    "ToEmail=aholt21754@gmail.com"
+]

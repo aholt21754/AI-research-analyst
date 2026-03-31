@@ -1,0 +1,32 @@
+{
+  "hits": [
+    {
+      "title": "Show HN: Open-source LLM inference engine with 3x speedup",
+      "url": "https://github.com/example/fast-llm",
+      "story_text": "We built a new inference engine using speculative decoding and continuous batching to achieve 3x throughput on consumer GPUs.",
+      "created_at": "2026-03-21T08:00:00.000Z",
+      "objectID": "40000001",
+      "points": 250
+    },
+    {
+      "title": "Fine-tuning LLMs on domain-specific data: lessons learned",
+      "url": "https://blog.example.com/finetuning-lessons",
+      "story_text": null,
+      "created_at": "2026-03-20T12:00:00.000Z",
+      "objectID": "40000002",
+      "points": 180
+    },
+    {
+      "title": "Ask HN: Best practices for RAG pipelines in production?",
+      "url": null,
+      "story_text": "We have been running a RAG system in production for six months. Here are the top gotchas we encountered.",
+      "created_at": "2026-03-19T16:00:00.000Z",
+      "objectID": "40000003",
+      "points": 120
+    }
+  ],
+  "nbHits": 3,
+  "page": 0,
+  "nbPages": 1,
+  "hitsPerPage": 20
+}
