@@ -1,3 +1,5 @@
+import time
+
 from agents.logging_config import get_logger
 from agents.scraper.sources import arxiv, github_trending, hackernews, rss
 
@@ -6,7 +8,12 @@ logger = get_logger(__name__)
 _MAX_ARTICLES = 40
 
 
-def run(sources: list[str] = None) -> list[dict]:
+def run(sources: list[str] = None) -> tuple[list[dict], dict]:
+    """Fetch articles from all enabled sources.
+
+    Returns:
+        (articles, stats) where stats contains per-source results and after_dedup count.
+    """
     enabled = set(sources) if sources else {"arxiv", "hackernews", "github", "rss"}
     all_articles: list[dict] = []
     source_results: dict[str, dict] = {}
@@ -21,16 +28,19 @@ def run(sources: list[str] = None) -> list[dict]:
     for name in ["arxiv", "hackernews", "github", "rss"]:
         if name not in enabled:
             continue
+        t0 = time.monotonic()
         try:
             articles = _source_map[name]()
+            latency_ms = int((time.monotonic() - t0) * 1000)
             all_articles.extend(articles)
-            source_results[name] = {"status": "success", "count": len(articles)}
+            source_results[name] = {"status": "success", "count": len(articles), "latency_ms": latency_ms}
         except Exception as exc:
+            latency_ms = int((time.monotonic() - t0) * 1000)
             logger.error(
                 "scraper.source_fatal_error",
                 extra={"source": name, "error_type": type(exc).__name__, "error_msg": str(exc)},
             )
-            source_results[name] = {"status": "unexpected_error", "count": 0}
+            source_results[name] = {"status": "unexpected_error", "count": 0, "latency_ms": latency_ms}
 
     before = len(all_articles)
     deduped = _deduplicate(all_articles)
@@ -42,7 +52,13 @@ def run(sources: list[str] = None) -> list[dict]:
     )
 
     sorted_articles = sorted(deduped, key=lambda a: a.get("published_date", ""), reverse=True)
-    return sorted_articles[:_MAX_ARTICLES]
+
+    stats = {
+        "sources": source_results,
+        "raw_total": before,
+        "after_dedup": after,
+    }
+    return sorted_articles[:_MAX_ARTICLES], stats
 
 
 def _deduplicate(articles: list[dict]) -> list[dict]:
