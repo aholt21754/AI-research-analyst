@@ -18,7 +18,7 @@ except ImportError:
 ATOM_NS = "http://www.w3.org/2005/Atom"
 
 
-def fetch_articles(query: str = "LLM agent", max_results: int = 20) -> list[dict]:
+def fetch_articles(query: str = "LLM OR RAG OR multimodal OR fine-tuning OR agent OR evals", max_results: int = 20) -> list[dict]:
     xml_text = _fetch_xml(query, max_results)
     if xml_text is None:
         return []

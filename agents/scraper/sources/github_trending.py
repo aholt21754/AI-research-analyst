@@ -15,6 +15,7 @@ _AI_KEYWORDS = {
     "diffusion", "embedding", "inference", "finetune", "fine-tune",
     "agent", "gpt", "bert", "claude", "openai", "anthropic",
     "hugging", "deep learning", "generative", "language model",
+    "rag", "multimodal", "quantization", "lora", "eval", "benchmark",
 }
 
 
