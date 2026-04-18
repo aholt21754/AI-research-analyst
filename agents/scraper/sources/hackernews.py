@@ -10,7 +10,7 @@ HN_SEARCH_URL = "https://hn.algolia.com/api/v1/search"
 _RETRY_DELAYS = [1, 3, 7]
 
 
-def fetch_articles(query: str = "LLM agent machine learning", max_results: int = 20) -> list[dict]:
+def fetch_articles(query: str = "LLM agents RAG multimodal machine learning", max_results: int = 20) -> list[dict]:
     data = _fetch_json(query, max_results)
     if data is None:
         return []

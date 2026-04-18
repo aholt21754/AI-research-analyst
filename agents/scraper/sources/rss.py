@@ -12,6 +12,8 @@ DEFAULT_FEEDS = [
     "https://thegradient.pub/rss/",
     "https://lastweekin.ai/feed",
     "https://blog.research.google/feeds/posts/default",
+    "https://towardsdatascience.com/feed",
+    "https://aws.amazon.com/blogs/machine-learning/feed/",
 ]
 
 

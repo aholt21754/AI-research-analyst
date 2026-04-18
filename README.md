@@ -178,9 +178,15 @@ ai-research-analyst/
 ### Local setup
 
 ```bash
-# Clone and install
+# Clone the repository
 git clone https://github.com/yourname/ai-research-analyst
 cd ai-research-analyst
+
+# Create and activate a virtual environment (Windows)
+python -m venv venv
+venv\Scripts\activate
+
+# Install dependencies
 pip install -e ".[dev]"
 
 # Configure environment
