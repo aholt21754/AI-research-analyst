@@ -8,9 +8,9 @@ from agents.logging_config import get_logger
 logger = get_logger(__name__)
 
 
-def write(articles: list[dict], digest: list[dict]) -> None:
+def write(articles: list[dict], digest: list[dict], scraper_stats: dict, summarizer_stats: dict) -> None:
     run_id = f"run_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:6]}"
-    manifest = _build(run_id, articles, digest)
+    manifest = _build(run_id, articles, digest, scraper_stats, summarizer_stats)
 
     env = os.getenv("ENV", "local")
     if env == "local":
@@ -19,18 +19,24 @@ def write(articles: list[dict], digest: list[dict]) -> None:
         _write_s3(run_id, manifest)
 
 
-def _build(run_id: str, articles: list[dict], digest: list[dict]) -> dict:
+def _build(run_id: str, articles: list[dict], digest: list[dict], scraper_stats: dict, summarizer_stats: dict) -> dict:
     return {
         "run_id": run_id,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "environment": os.getenv("ENV", "local"),
         "prompt_version": digest[0].get("prompt_version") if digest else None,
         "scraper": {
-            "raw_total": len(articles),
+            "raw_total": scraper_stats.get("raw_total", len(articles)),
+            "after_dedup": scraper_stats.get("after_dedup", len(articles)),
+            "sources": scraper_stats.get("sources", {}),
         },
         "summarizer": {
             "model": "claude-haiku-4-5",
             "digest_count": len(digest),
+            "input_tokens": summarizer_stats.get("input_tokens", 0),
+            "output_tokens": summarizer_stats.get("output_tokens", 0),
+            "cost_usd": summarizer_stats.get("cost_usd", 0.0),
+            "latency_ms": summarizer_stats.get("latency_ms", 0),
         },
         "digest": [
             {

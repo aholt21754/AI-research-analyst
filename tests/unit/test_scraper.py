@@ -390,7 +390,7 @@ class TestScraperAgent:
              patch("agents.scraper.agent.github_trending.fetch_articles", return_value=[_make_article("C", "https://c.com", "github")]), \
              patch("agents.scraper.agent.rss.fetch_articles", return_value=[_make_article("D", "https://d.com", "rss")]):
             from agents.scraper import agent
-            result = agent.run()
+            result, _ = agent.run()
         assert len(result) == 4
         sources = {a["source"] for a in result}
         assert sources == {"arxiv", "hackernews", "github", "rss"}
@@ -402,7 +402,7 @@ class TestScraperAgent:
              patch("agents.scraper.agent.github_trending.fetch_articles", return_value=[]), \
              patch("agents.scraper.agent.rss.fetch_articles", return_value=[]):
             from agents.scraper import agent
-            result = agent.run()
+            result, _ = agent.run()
         urls = [a["url"] for a in result]
         assert urls.count(shared_url) == 1
 
@@ -415,7 +415,7 @@ class TestScraperAgent:
              patch("agents.scraper.agent.github_trending.fetch_articles", return_value=[]), \
              patch("agents.scraper.agent.rss.fetch_articles", return_value=[]):
             from agents.scraper import agent
-            result = agent.run()
+            result, _ = agent.run()
         assert result[0]["title"] == "New"
         assert result[1]["title"] == "Old"
 
@@ -425,7 +425,7 @@ class TestScraperAgent:
              patch("agents.scraper.agent.github_trending.fetch_articles", return_value=[]), \
              patch("agents.scraper.agent.rss.fetch_articles", return_value=[]):
             from agents.scraper import agent
-            result = agent.run()
+            result, _ = agent.run()
         assert len(result) == 1
         assert result[0]["source"] == "hackernews"
 
@@ -435,7 +435,7 @@ class TestScraperAgent:
              patch("agents.scraper.agent.github_trending.fetch_articles", side_effect=RuntimeError()), \
              patch("agents.scraper.agent.rss.fetch_articles", side_effect=RuntimeError()):
             from agents.scraper import agent
-            result = agent.run()
+            result, _ = agent.run()
         assert result == []
 
     def test_returns_at_most_40_articles(self):
@@ -445,5 +445,5 @@ class TestScraperAgent:
              patch("agents.scraper.agent.github_trending.fetch_articles", return_value=[]), \
              patch("agents.scraper.agent.rss.fetch_articles", return_value=[]):
             from agents.scraper import agent
-            result = agent.run()
+            result, _ = agent.run()
         assert len(result) <= 40
